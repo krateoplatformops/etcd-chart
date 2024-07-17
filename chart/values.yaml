@@ -81,7 +81,7 @@ diagnosticMode:
 image:
   registry: ghcr.io
   repository: krateoplatformops/etcd
-  tag: 3.5.10-0
+  tag: 3.5.14-debian-12-r4
   digest: ""
   ## @param image.pullPolicy etcd image pull policy
   ## Specify a imagePullPolicy
