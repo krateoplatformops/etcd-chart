@@ -9,22 +9,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Authenticate with GitHub App
+        id: authenticate
+        uses: tibdex/github-app-token@v1
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.PRIVATE_KEY }}
+
       - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Extract Version
-        id: tagger
-        uses: battila7/get-version-action@v2
-
-      - name: Print Version
-        run: |
-          echo ${{steps.tagger.outputs.version}}
-          echo ${{steps.tagger.outputs.version-without-v}}
 
       - name: Publish Helm chart
         uses: stefanprodan/helm-gh-pages@master
         with:
-          token: ${{ secrets.HELM_CHARTS_BOT }}
+          token: ${{ steps.authenticate.outputs.token }}
           charts_dir: ./
           charts_url: https://charts.krateo.io
           owner: krateoplatformops
